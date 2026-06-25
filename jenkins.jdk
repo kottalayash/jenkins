@@ -17,8 +17,8 @@ pipeline {
             steps {
                 echo 'TEST SUCCESS'
                 }
-            }
         }
+        
 
         stage ('DEPLOY'){
             steps {
@@ -28,3 +28,4 @@ pipeline {
         
     }
 }
+
