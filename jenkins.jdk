@@ -15,10 +15,9 @@ pipeline {
         
         stage ('TEST') {
             steps {
-                withSonarQubeEnv(installationName: 'soanrqube' ,credentialsId: 'Sonar-Cred'){
+                withSonarQubeEnv(installationName: 'soanrqube' ,credentialsId: 'Sonar-Cred') {
                     sh '''cd backend
-                       mvn sonar:sonar -sonar.projectKey=First-Project '''
-                
+                     mvn sonar:sonar -Dsonar.projectKey=First-Project'''
                 }
              }
         }
