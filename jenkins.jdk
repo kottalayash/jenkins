@@ -13,25 +13,34 @@ pipeline {
             }
         }
         
+        // stage ('TEST') {
+        //     steps {
+        //       sh '''cd backend
+        //          mvn sonar:sonar \
+        //         -Dsonar.projectKey=studentapp \
+        //         -Dsonar.projectName='studentapp' \
+        //         -Dsonar.host.url=http://18.216.94.43:9000 \
+        //         -Dsonar.token=sqp_4cf247a87aa42ab95a37e8f7f4383e532b3813d7'''
+        //     }
+        // }
+
         stage ('TEST') {
             steps {
-                withSonarQubeEnv(installationName: 'soanrqube' ,credentialsId: 'Sonar-Cred') {
-                    sh '''cd backend
-                     mvn sonar:sonar -Dsonar.projectKey=First-Project'''
+                withSonarQubeEnv(installationName: 'sonarqube' ,credentialsId: 'sonar-cred') {
+                 sh '''cd backend
+                  mvn sonar:sonar -Dsonar.projectKey=Studentapp'''
                 }
-             }
+            }
         }
-
         stage ('Quality-Gate') {
             steps {
                 timeout(10) {
-                        waitForQualityGate abortPipeline: true, credentialsId: 'Sonar-Cred'
+                        waitForQualityGate abortPipeline: true, credentialsId: 'sonar-cred'
                     }
                 
             }
         }
         
-
         stage ('DEPLOY'){
             steps {
                 echo 'DEPLOY SUCCESS'
