@@ -15,8 +15,21 @@ pipeline {
         
         stage ('TEST') {
             steps {
-                echo 'TEST SUCCESS'
+                withSonarQubeEnv(installationName: 'soanrqube' ,credentialsId: 'Sonar-Cred'){
+                    sh '''cd backend
+                       mvn sonar:sonar -sonar.projectKey=First-Project '''
+                
                 }
+             }
+        }
+
+        stage ('Quality-Gate') {
+            steps {
+                timeout(10) {
+                        waitForQualityGate abortPipeline: true, credentialsId: 'Sonar-Cred'
+                    }
+                
+            }
         }
         
 
@@ -28,4 +41,3 @@ pipeline {
         
     }
 }
-
