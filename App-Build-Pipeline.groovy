@@ -8,7 +8,7 @@ pipeline {
     } 
         stage ('DOCKER-FRONTED') {
         steps {
-            sh '''cd fronted
+            sh '''cd frontend
             docker build -t kottalayash/frontend:latest .'''
         }
     }   
