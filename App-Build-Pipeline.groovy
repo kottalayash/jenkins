@@ -38,11 +38,13 @@ pipeline {
             
         }
             
-        stage ('EKS-ACCESS'){
-            steps {
-                sh ' aws eks update-kubeconfig \\ --region ap-south-1\\--name my-cluster'
-            }
-        }
+        stage('EKS-ACCESS') {
+    steps {
+        sh '''
+        aws eks update-kubeconfig --region ap-south-1 --name my-cluster
+        '''
+    }
+}
         stage ('KUBECTL-APPLY') {
             steps{
                 sh 'kubectl apply -f simple-deploy/'
