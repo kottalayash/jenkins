@@ -18,16 +18,13 @@ pipeline {
             docker build -t kottalayash/backend:latest .'''            
         }
     } 
-        stage ('DOCKER-LOGIN') {
-            steps {
-                withCredentials([
-                    usernamePassword(
-                        credentialsId: 'docker-hub-cred',
-                        usernameVariable: 'DOCKER_USERNAME',
-                        passwordVariable: 'DOCKER_PASSWORD' )
-                ])
-            }
-        } 
+         stage('DOCKER-LOGIN') {
+    steps {
+        withCredentials([usernamePassword(credentialsId: 'docker-hub-cred', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+            sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+        }
+    }
+}
         stage ('DOCKER-PUSH') {
             steps {
                sh '''docker push kottalayash/frontend:latest 
