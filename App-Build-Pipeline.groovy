@@ -34,6 +34,13 @@ pipeline {
                     docker push kottalayash/backend:latest '''
             }
         }
+        stage ('RM-IMAGE') {
+            steps {
+                sh 'docker rmi -f $(docker images -aq)'
+            }
+            
+        }
+            
         stage ('EKS-ACCESS'){
             steps {
                 sh ' aws eks update-kubeconfig \\ --region ap-south-1\\--name my-cluster'
