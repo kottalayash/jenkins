@@ -37,7 +37,12 @@ pipeline {
             }
             
         }
-            
+        stage ('AWS-Cred'){
+            steps {
+                withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS-Cred', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+               }
+            }
+        }  
         stage('EKS-ACCESS') {
     steps {
         sh '''
